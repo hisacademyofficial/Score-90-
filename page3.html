@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HIS Academy - Final</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyApw1BMALxqOlY4hBkGIMlv4qZBKkYM9k0",
+  authDomain: "gospark-media.firebaseapp.com",
+  projectId: "gospark-media",
+  storageBucket: "gospark-media.firebasestorage.app",
+  messagingSenderId: "888562657357",
+  appId: "1:888562657357:web:7e1e5df099c280c10fd404",
+  measurementId: "G-M571410VS2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.chooseYes = async function(){
+  let id = localStorage.getItem("leadId");
+  await updateDoc(doc(db,"hisAcademyLeads",id),{
+    decision:"YES - 100/100"
+  });
+  alert("Welcome to 100/100 Mission 🔥");
+}
+
+window.chooseNo = async function(){
+  let id = localStorage.getItem("leadId");
+  let reason=document.getElementById("reason").value;
+
+  await updateDoc(doc(db,"hisAcademyLeads",id),{
+    decision:"NO",
+    reason:reason
+  });
+  alert("Response Saved");
+}
+</script>
+</head>
+
+<body class="bg-gray-900 text-white flex flex-col justify-center items-center min-h-screen">
+
+<div class="bg-gray-800 p-6 rounded-xl max-w-md text-center">
+
+<h2 class="mb-4 text-yellow-400 text-xl">
+Do You Want 100/100?
+</h2>
+
+<button onclick="chooseYes()"
+class="w-full bg-yellow-400 text-black p-3 rounded mb-3 font-bold">
+YES 🔥 I Choose 100/100
+</button>
+
+<textarea id="reason" placeholder="Why not?" 
+class="w-full p-3 mb-3 bg-gray-700 rounded"></textarea>
+
+<button onclick="chooseNo()"
+class="w-full bg-gray-600 p-3 rounded">
+No
+</button>
+
+</div>
+
+</body>
+</html>
