@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HIS Academy - Step 1</title>
+<title>HIS Academy - Mission 100/100</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script type="module">
@@ -45,50 +45,108 @@ window.submitForm = async function(){
   };
 
   const docRef = await addDoc(collection(db,"hisAcademyLeads"),data);
-
-  // Store document ID in localStorage
   localStorage.setItem("leadId", docRef.id);
 
   window.location.href="page2.html";
 }
 </script>
+
+<style>
+body{
+  background: linear-gradient(to bottom,#0B1120,#111827);
+}
+</style>
 </head>
 
-<body class="bg-gray-900 text-white flex justify-center items-center min-h-screen">
+<body class="text-white flex flex-col items-center p-6">
 
-<div class="bg-gray-800 p-6 rounded-xl w-full max-w-md">
+<!-- ================= BRAND ================= -->
+
+<h1 class="text-4xl font-bold text-yellow-400 mt-4 text-center">
+HIS Academy
+</h1>
+
+<p class="text-xl text-yellow-300 font-semibold mt-2">
+Mission 100/100
+</p>
+
+<p class="text-red-400 mt-3 text-center font-bold">
+Only Serious Students Who Want 90+ Can Continue
+</p>
+
+<!-- ================= COUNTDOWN ================= -->
+
+<div class="mt-6 bg-black p-4 rounded-xl text-center">
+<p class="text-yellow-400 font-bold mb-2">
+⏳ Time Left For March 18th 10:00 AM
+</p>
+
+<div class="flex justify-center gap-4 text-lg font-bold">
+<div><span id="days"></span><br>Days</div>
+<div><span id="hours"></span><br>Hours</div>
+<div><span id="minutes"></span><br>Min</div>
+<div><span id="seconds"></span><br>Sec</div>
+</div>
+</div>
+
+<!-- ================= FORM ================= -->
+
+<div class="bg-gray-800 p-6 rounded-xl w-full max-w-md mt-8">
 
 <input id="name" placeholder="Name" class="w-full p-3 mb-3 bg-gray-700 rounded">
-<input id="phone" placeholder="Phone" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<input id="phone" placeholder="Phone Number" class="w-full p-3 mb-3 bg-gray-700 rounded">
 <input id="district" placeholder="District" class="w-full p-3 mb-3 bg-gray-700 rounded">
 
 <select id="medium" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<option value="">Select Medium</option>
 <option>Kannada</option>
 <option>English</option>
 </select>
 
-<input id="studentsCount" placeholder="Students in class" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<input id="studentsCount" placeholder="Students in Class" class="w-full p-3 mb-3 bg-gray-700 rounded">
 <input id="midterm" placeholder="Midterm %" class="w-full p-3 mb-3 bg-gray-700 rounded">
 <input id="target" placeholder="Target %" class="w-full p-3 mb-3 bg-gray-700 rounded">
 
-<p class="text-yellow-400">Add 6 Friends</p>
+<p class="text-yellow-400 font-semibold mb-2">
+Add 6 Friends (Compulsory)
+</p>
 
 <div id="friends"></div>
 
 <button onclick="submitForm()"
-class="w-full bg-yellow-400 text-black p-3 mt-4 rounded font-bold">
-Continue
+class="w-full bg-yellow-400 text-black p-3 mt-4 rounded font-bold hover:scale-105 transition">
+Continue To Blueprint
 </button>
 
 </div>
 
 <script>
+// Generate 6 friend inputs
 for(let i=1;i<=6;i++){
  let input=document.createElement("input");
- input.placeholder="Friend "+i+" Phone";
+ input.placeholder="Friend "+i+" Phone Number";
  input.className="friendInput w-full p-3 mb-2 bg-gray-700 rounded";
  document.getElementById("friends").appendChild(input);
 }
+
+// LIVE COUNTDOWN
+const targetDate = new Date("March 18, 2026 10:00:00").getTime();
+
+setInterval(()=>{
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+  const seconds = Math.floor((distance % (1000*60))/1000);
+
+  document.getElementById("days").innerHTML = days;
+  document.getElementById("hours").innerHTML = hours;
+  document.getElementById("minutes").innerHTML = minutes;
+  document.getElementById("seconds").innerHTML = seconds;
+
+},1000);
 </script>
 
 </body>
