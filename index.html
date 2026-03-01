@@ -47,6 +47,72 @@ body{background:linear-gradient(to bottom,#0B1120,#111827);}
 50%{box-shadow:0 0 30px #FFD700;}
 100%{box-shadow:0 0 10px #FFD700;}
 }
+  .premium-card{
+  position:relative;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:0.5s;
+  transform:translateY(40px);
+  opacity:0;
+}
+
+.premium-card.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.premium-card:hover{
+  transform:scale(1.08);
+}
+
+.free-card{
+  box-shadow:0 0 15px #00ff88;
+}
+
+.gold-card{
+  box-shadow:0 0 25px #FFD700;
+  animation:goldPulse 2s infinite;
+}
+
+@keyframes goldPulse{
+  0%{box-shadow:0 0 15px #FFD700;}
+  50%{box-shadow:0 0 35px #FFD700;}
+  100%{box-shadow:0 0 15px #FFD700;}
+}
+
+.badge-free{
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  background:#00ff88;
+  color:black;
+  padding:5px 12px;
+  border-radius:20px;
+  font-weight:bold;
+}
+
+.badge-gold{
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  background:#FFD700;
+  color:black;
+  padding:5px 12px;
+  border-radius:20px;
+  font-weight:bold;
+}
+
+.stamp{
+  margin-top:10px;
+  font-size:14px;
+  color:#FFD700;
+  font-weight:bold;
+  letter-spacing:1px;
+}
 </style>
 </head>
 
@@ -191,9 +257,9 @@ function goPage2(){
  document.getElementById("page1").classList.add("hidden");
  document.getElementById("page2").classList.remove("hidden");
 
- let cards=document.querySelectorAll(".subject");
+ let cards=document.querySelectorAll(".premium-card");
  cards.forEach((card,index)=>{
-   setTimeout(()=>{card.classList.add("show");},index*300);
+   setTimeout(()=>{card.classList.add("show");},index*250);
  });
 }
 
