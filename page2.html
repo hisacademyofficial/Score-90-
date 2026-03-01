@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HIS Academy - Step 2</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white text-center p-6">
+
+<h2 class="text-yellow-400 text-2xl mb-6">Subjects You Get</h2>
+
+<div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
+<div class="bg-green-700 p-4 rounded">Kannada - FREE</div>
+<div class="bg-green-700 p-4 rounded">English - FREE</div>
+<div class="bg-green-700 p-4 rounded">Hindi - FREE</div>
+<div class="bg-green-700 p-4 rounded">Social - FREE</div>
+<div class="bg-yellow-500 p-4 rounded">Maths - ₹149</div>
+<div class="bg-yellow-500 p-4 rounded">Science - ₹149</div>
+</div>
+
+<h3 class="mt-10 mb-4 text-xl">Watch Full Video 👇</h3>
+
+<video id="video" autoplay playsinline class="mx-auto rounded" width="300">
+<source src="your-video.mp4" type="video/mp4">
+</video>
+
+<script>
+let video=document.getElementById("video");
+
+video.onended=function(){
+   window.location.href="page3.html";
+}
+</script>
+
+</body>
+</html>
