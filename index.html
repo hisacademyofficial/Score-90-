@@ -31,13 +31,13 @@ window.submitForm = async function(){
   });
 
   let data = {
-    name: name.value,
-    phone: phone.value,
-    district: district.value,
-    medium: medium.value,
-    studentsInClass: studentsCount.value,
-    midterm: midterm.value,
-    target: target.value,
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    district: document.getElementById("district").value,
+    medium: document.getElementById("medium").value,
+    studentsInClass: document.getElementById("studentsCount").value,
+    midterm: document.getElementById("midterm").value,
+    target: document.getElementById("target").value,
     friends: friends,
     decision: "Pending",
     reason: "",
@@ -45,9 +45,11 @@ window.submitForm = async function(){
   };
 
   const docRef = await addDoc(collection(db,"hisAcademyLeads"),data);
+
   localStorage.setItem("leadId", docRef.id);
 
-  window.location.href="page2.html";
+  // 🔥 THIS LINE TAKES YOU TO PAGE 2
+  window.location.href = "page2.html";
 }
 </script>
 
