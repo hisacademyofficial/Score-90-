@@ -9,17 +9,85 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-body{background:linear-gradient(to bottom,#0B1120,#111827);}
-.glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,215,0,0.3);}
-.subject{opacity:0;transform:translateY(40px) scale(0.9);transition:all .6s ease;}
-.subject.show{opacity:1;transform:translateY(0) scale(1);}
-.gold-glow{animation:gold 1.5s infinite;}
-@keyframes gold{0%{box-shadow:0 0 10px #FFD700;}50%{box-shadow:0 0 30px #FFD700;}100%{box-shadow:0 0 10px #FFD700;}}
+body{
+  background: linear-gradient(to bottom,#0B1120,#111827);
+}
+
+.glass{
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,215,0,0.3);
+}
+
+.subject{
+  opacity:0;
+  transform: translateY(40px) scale(0.9);
+  transition: all .6s ease;
+}
+.subject.show{
+  opacity:1;
+  transform: translateY(0) scale(1);
+}
+
+.gold-glow{
+  animation: gold 1.5s infinite;
+}
+@keyframes gold{
+  0%{box-shadow:0 0 10px #FFD700;}
+  50%{box-shadow:0 0 30px #FFD700;}
+  100%{box-shadow:0 0 10px #FFD700;}
+}
+
+.shine{
+  position: relative;
+  overflow:hidden;
+}
+.shine::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background: linear-gradient(120deg,transparent,rgba(255,255,255,.3),transparent);
+  animation: shine 3s infinite;
+}
+@keyframes shine{
+  100%{left:100%;}
+}
 </style>
+  <!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyApw1BMALxqOlY4hBkGIMlv4qZBKkYM9k0",
+    authDomain: "gospark-media.firebaseapp.com",
+    projectId: "gospark-media",
+    storageBucket: "gospark-media.firebasestorage.app",
+    messagingSenderId: "888562657357",
+    appId: "1:888562657357:web:7e1e5df099c280c10fd404",
+    measurementId: "G-M571410VS2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.saveStudentData = async function(data) {
+    try {
+      await addDoc(collection(db, "hisAcademyLeads"), data);
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  };
+</script>
 </head>
 
 <body class="text-white font-sans">
 
+<!-- ================= COUNTDOWN ================= -->
 <div class="text-center p-3 bg-black text-yellow-400 font-bold">
 ⏳ SSLC Countdown: 17 Days Left
 </div>
@@ -36,33 +104,50 @@ Only Serious 90+ Students Continue
 
 <div class="glass p-6 rounded-2xl w-full max-w-md">
 
-<input id="name" type="text" placeholder="Name" class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-<input id="phone" type="tel" placeholder="Phone Number" class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-<input id="district" type="text" placeholder="District" class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+<input type="text" placeholder="Name"
+class="w-full p-3 mb-3 rounded-lg bg-gray-800">
 
-<select id="medium" class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+<input type="tel" placeholder="Phone Number"
+class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+
+<input type="text" placeholder="District"
+class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+
+<select class="w-full p-3 mb-3 rounded-lg bg-gray-800">
 <option>Medium</option>
 <option>Kannada</option>
 <option>English</option>
 </select>
 
-<input id="studentsCount" type="number" placeholder="Students in your 10th class" class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-<input id="midterm" type="number" placeholder="Midterm %" class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-<input id="target" type="number" placeholder="Target Final %" class="w-full p-3 mb-4 rounded-lg bg-gray-800">
+<input type="number" placeholder="Students in your 10th class"
+class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+
+<input type="number" placeholder="Midterm %"
+class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+
+<input type="number" placeholder="Target Final %"
+class="w-full p-3 mb-4 rounded-lg bg-gray-800">
 
 <p class="text-yellow-400 font-semibold mb-2">
-Add 6 Friends (Compulsory)
+Add 6 Friends (Compulsory to Unlock)
 </p>
 
 <div id="friends"></div>
 
-<button onclick="goPage2()" class="w-full mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold py-3 rounded-xl hover:scale-110 transition">
+<button onclick="goPage2()"
+class="w-full mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold py-3 rounded-xl hover:scale-110 transition">
 Unlock Subjects
 </button>
 
 </div>
 </div>
-
+<input id="name" type="text" placeholder="Name" ...>
+<input id="phone" type="tel" placeholder="Phone Number" ...>
+<input id="district" type="text" placeholder="District" ...>
+<select id="medium" ...>
+<input id="studentsCount" type="number" ...>
+<input id="midterm" type="number" ...>
+<input id="target" type="number" ...>
 <!-- ================= PAGE 2 ================= -->
 <div id="page2" class="hidden min-h-screen p-6">
 
@@ -72,17 +157,38 @@ Unlock Subjects
 
 <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
 
-<div class="subject glass p-4 rounded-xl text-center border border-green-400">Kannada - FREE</div>
-<div class="subject glass p-4 rounded-xl text-center border border-green-400">English - FREE</div>
-<div class="subject glass p-4 rounded-xl text-center border border-green-400">Hindi - FREE</div>
-<div class="subject glass p-4 rounded-xl text-center border border-green-400">Social - FREE</div>
+<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
+Kannada<br><span class="text-green-400 text-sm">FREE</span>
+</div>
 
-<div class="subject glass p-4 rounded-xl text-center border border-yellow-400 gold-glow">Maths - ₹149</div>
-<div class="subject glass p-4 rounded-xl text-center border border-yellow-400 gold-glow">Science - ₹149</div>
+<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
+English<br><span class="text-green-400 text-sm">FREE</span>
+</div>
+
+<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
+Hindi<br><span class="text-green-400 text-sm">FREE</span>
+</div>
+
+<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
+Social<br><span class="text-green-400 text-sm">FREE</span>
+</div>
+
+<div class="subject glass p-4 rounded-xl text-center gold-glow border border-yellow-400">
+Maths<br><span class="text-yellow-300 text-sm">₹149 • Out of Out</span>
+</div>
+
+<div class="subject glass p-4 rounded-xl text-center gold-glow border border-yellow-400">
+Science<br><span class="text-yellow-300 text-sm">₹149 • Full Questions</span>
+</div>
 
 </div>
 
-<button onclick="goPage3()" class="block mx-auto mt-8 bg-yellow-500 text-black px-6 py-3 rounded-xl font-bold hover:scale-110 transition">
+<p class="text-center text-yellow-400 mt-6">
+4 Subjects FREE. Maths & Science ₹149 each for 100/100.
+</p>
+
+<button onclick="goPage3()"
+class="block mx-auto mt-8 bg-yellow-500 text-black px-6 py-3 rounded-xl font-bold hover:scale-110 transition">
 Continue
 </button>
 
@@ -95,7 +201,7 @@ Continue
 Watch Full Video Carefully 👇
 </h3>
 
-<video id="mainVideo" autoplay playsinline controls class="rounded-xl mb-6 max-w-md">
+<video id="mainVideo" autoplay playsinline class="rounded-xl mb-6 max-w-md">
 <source src="your-video.mp4" type="video/mp4">
 </video>
 
@@ -105,11 +211,14 @@ Watch Full Video Carefully 👇
 Do you want to become the student everyone respects?
 </p>
 
-<button id="yesBtn" disabled class="w-full bg-gray-600 text-black font-bold py-3 rounded-xl mb-3 cursor-not-allowed">
+<button id="yesBtn"
+class="w-full bg-gray-600 text-black font-bold py-3 rounded-xl mb-3 cursor-not-allowed"
+disabled>
 🔥 YES – I Choose 100/100
 </button>
 
-<button onclick="showReason()" class="w-full bg-gray-700 py-3 rounded-xl">
+<button onclick="showReason()"
+class="w-full bg-gray-700 py-3 rounded-xl">
 😔 No – I Am Okay With Average
 </button>
 
@@ -117,40 +226,18 @@ Do you want to become the student everyone respects?
 Next year you will regret not taking action today.
 </p>
 
-<textarea id="reasonBox" placeholder="Tell us why..." class="hidden w-full mt-4 p-3 rounded-lg bg-gray-800"></textarea>
+<textarea id="reasonBox"
+placeholder="Tell us why..."
+class="hidden w-full mt-4 p-3 rounded-lg bg-gray-800"></textarea>
 
 </div>
+
 </div>
-
-<!-- ================= FIREBASE ================= -->
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyApw1BMALxqOlY4hBkGIMlv4qZBKkYM9k0",
-  authDomain: "gospark-media.firebaseapp.com",
-  projectId: "gospark-media",
-  storageBucket: "gospark-media.firebasestorage.app",
-  messagingSenderId: "888562657357",
-  appId: "1:888562657357:web:7e1e5df099c280c10fd404",
-  measurementId: "G-M571410VS2"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.saveData = async function(data){
-  await addDoc(collection(db,"hisAcademyLeads"),data);
-}
-
-</script>
 
 <script>
 
-// Generate 6 friend inputs
-let f=document.getElementById("friends");
+// Generate 6 friend fields
+let f = document.getElementById("friends");
 for(let i=1;i<=6;i++){
  let input=document.createElement("input");
  input.type="tel";
@@ -159,34 +246,39 @@ for(let i=1;i<=6;i++){
  f.appendChild(input);
 }
 
-let studentData={};
-
 function goPage2(){
 
- let friends=[];
- document.querySelectorAll("#friends input").forEach(i=>friends.push(i.value));
+  let friendsInputs = document.querySelectorAll("#friends input");
+  let friends = [];
 
- studentData={
-  name:document.getElementById("name").value,
-  phone:document.getElementById("phone").value,
-  district:document.getElementById("district").value,
-  medium:document.getElementById("medium").value,
-  studentsInClass:document.getElementById("studentsCount").value,
-  midterm:document.getElementById("midterm").value,
-  target:document.getElementById("target").value,
-  friends:friends,
-  decision:"Pending",
-  reason:"",
-  timestamp:new Date()
- };
+  friendsInputs.forEach(input => {
+    friends.push(input.value);
+  });
 
- document.getElementById("page1").classList.add("hidden");
- document.getElementById("page2").classList.remove("hidden");
+  let studentData = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    district: document.getElementById("district").value,
+    medium: document.getElementById("medium").value,
+    studentsInClass: document.getElementById("studentsCount").value,
+    midtermPercentage: document.getElementById("midterm").value,
+    targetPercentage: document.getElementById("target").value,
+    friends: friends,
+    decision: "Not Answered Yet",
+    reason: "",
+    timestamp: new Date()
+  };
 
- document.querySelectorAll(".subject").forEach((card,index)=>{
-  setTimeout(()=>card.classList.add("show"),index*300);
- });
-}
+  window.currentStudentData = studentData;
+
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
+
+  let cards=document.querySelectorAll(".subject");
+  cards.forEach((card,index)=>{
+    setTimeout(()=>{card.classList.add("show");},index*300);
+  });
+      }
 
 function goPage3(){
  document.getElementById("page2").classList.add("hidden");
@@ -200,19 +292,47 @@ video.onended=function(){
  yesBtn.disabled=false;
  yesBtn.classList.remove("bg-gray-600","cursor-not-allowed");
  yesBtn.classList.add("bg-gradient-to-r","from-yellow-400","to-yellow-600");
- yesBtn.onclick=async function(){
-  studentData.decision="YES";
-  await window.saveData(studentData);
-  confetti({particleCount:150,spread:90,origin:{y:0.6}});
+ yesBtn.onclick=function(){
+   confetti({particleCount:150,spread:90,origin:{y:0.6}});
  };
+  yesBtn.disabled = false;
+
+yesBtn.classList.remove("bg-gray-600","cursor-not-allowed");
+
+yesBtn.classList.add(
+  "bg-gradient-to-r",
+  "from-yellow-400",
+  "to-yellow-600"
+);
+  yesBtn.onclick = async function(){
+
+  // Update decision
+  window.currentStudentData.decision = "YES - 100/100";
+
+  // Save to Firebase
+  await window.saveStudentData(window.currentStudentData);
+
+  // Celebration
+  confetti({
+    particleCount: 150,
+    spread: 90,
+    origin: { y: 0.6 }
+  });
+
+  alert("You are officially part of 100/100 Mission 🔥");
+};
 };
 
 async function showReason(){
- document.getElementById("regret").classList.remove("hidden");
- document.getElementById("reasonBox").classList.remove("hidden");
- studentData.decision="NO";
- studentData.reason=document.getElementById("reasonBox").value;
- await window.saveData(studentData);
+  document.getElementById("regret").classList.remove("hidden");
+  document.getElementById("reasonBox").classList.remove("hidden");
+
+  let reason = document.getElementById("reasonBox").value;
+
+  window.currentStudentData.decision = "NO";
+  window.currentStudentData.reason = reason;
+
+  await window.saveStudentData(window.currentStudentData);
 }
 
 </script>
