@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HIS Academy Royal 100/100 Mission</title>
+<title>HIS Academy Royal Mission</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -12,8 +12,7 @@
 body{
 background: radial-gradient(circle at top,#111827,#000000);
 color:white;
-font-family: 'Poppins', sans-serif;
-overflow-x:hidden;
+font-family: Poppins, sans-serif;
 }
 
 .gold-text{
@@ -24,27 +23,29 @@ color:transparent;
 
 .glass{
 background: rgba(255,255,255,0.05);
-backdrop-filter: blur(12px);
+backdrop-filter: blur(10px);
 border:1px solid rgba(255,215,0,0.3);
 }
 
 .subject{
 opacity:0;
-transform:translateY(50px) scale(0.9);
-transition:all .8s ease;
-}
-.subject.show{
-opacity:1;
-transform:translateY(0) scale(1);
+transform:translateY(40px);
+transition:all .7s ease;
 }
 
-.premium-glow{
+.subject.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.glow{
 animation:glow 2s infinite;
 }
+
 @keyframes glow{
-0%{box-shadow:0 0 15px #FFD700;}
-50%{box-shadow:0 0 40px #FFD700;}
-100%{box-shadow:0 0 15px #FFD700;}
+0%{box-shadow:0 0 10px #FFD700;}
+50%{box-shadow:0 0 35px #FFD700;}
+100%{box-shadow:0 0 10px #FFD700;}
 }
 
 .popup{
@@ -76,14 +77,14 @@ z-index:999;
 
 <body>
 
-<!-- ================= PAGE 1 ================= -->
+<!-- PAGE 1 -->
 <div id="page1" class="min-h-screen flex flex-col justify-center items-center p-6 text-center">
 
 <h1 class="text-3xl font-bold gold-text mb-4">
 Only Serious Students Are Allowed
 </h1>
-<p class="text-gray-300 mb-8">
-If you are not serious about scoring 100/100, please close this page.
+<p class="text-gray-300 mb-6">
+If you are not serious about 100/100, close this page.
 </p>
 
 <div class="glass p-6 rounded-2xl w-full max-w-md">
@@ -107,20 +108,26 @@ class="w-full p-3 mb-3 rounded-lg bg-black border border-gray-700">
 class="w-full p-3 mb-3 rounded-lg bg-black border border-gray-700">
 
 <input id="target" type="number" placeholder="Target %"
-class="w-full p-4 rounded-lg bg-black border border-gray-700 mb-4">
+class="w-full p-3 mb-4 rounded-lg bg-black border border-gray-700">
+
+<p class="text-yellow-400 font-semibold mb-2">
+Add 6 Friends (Compulsory)
+</p>
+
+<div id="friends"></div>
 
 <button onclick="goPage2()"
-class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold py-3 rounded-xl hover:scale-105 transition premium-glow">
+class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold py-3 rounded-xl hover:scale-105 transition glow">
 Submit & Continue
 </button>
 
 </div>
 </div>
 
-<!-- ================= PAGE 2 ================= -->
+<!-- PAGE 2 -->
 <div id="page2" class="hidden min-h-screen p-6 text-center">
 
-<h2 class="text-2xl gold-text font-bold mb-8">
+<h2 class="text-2xl gold-text font-bold mb-6">
 🔥 Your 6 Subjects 🔥
 </h2>
 
@@ -142,46 +149,44 @@ Hindi<br><span class="text-green-400">FREE</span>
 Social<br><span class="text-green-400">FREE</span>
 </div>
 
-<div class="subject glass p-4 rounded-xl border border-yellow-400 premium-glow">
+<div class="subject glass p-4 rounded-xl border border-yellow-400 glow">
 Maths<br>
 <span class="text-yellow-300">₹149</span><br>
-<span class="text-sm text-yellow-400">100 / 100 Guaranteed Strategy</span>
+<span class="text-sm text-yellow-400">100 / 100 Strategy</span>
 </div>
 
-<div class="subject glass p-4 rounded-xl border border-yellow-400 premium-glow">
+<div class="subject glass p-4 rounded-xl border border-yellow-400 glow">
 Science<br>
 <span class="text-yellow-300">₹149</span><br>
-<span class="text-sm text-yellow-400">All Questions Will Be Given</span>
+<span class="text-sm text-yellow-400">All Questions Provided</span>
 </div>
 
 </div>
 
-<p class="mt-8 text-red-500 font-semibold">
-Next Page Will Open Automatically After Video Ends
+<p class="mt-6 text-red-500 font-semibold">
+Next page will open automatically after video ends
 </p>
 
-<video id="video" autoplay playsinline class="rounded-xl mt-6 max-w-md mx-auto">
+<video id="video" autoplay muted playsinline controls class="rounded-xl mt-6 max-w-md mx-auto">
 <source src="your-video.mp4" type="video/mp4">
 </video>
 
 </div>
 
-<!-- ================= PAGE 3 ================= -->
+<!-- PAGE 3 -->
 <div id="page3" class="hidden min-h-screen flex flex-col justify-center items-center text-center p-6">
 
 <h3 class="text-2xl gold-text font-bold mb-6">
-Would You Like To Go With All 6 Subjects  
-And Become A 100/100 Student?
+Ready To Take All 6 Subjects And Become 100/100 Student?
 </h3>
 
 <button onclick="submitFinal()"
-class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold px-8 py-4 rounded-xl premium-glow hover:scale-110 transition">
+class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold px-8 py-4 rounded-xl glow hover:scale-110 transition">
 YES 🔥 I Want 100/100
 </button>
 
 </div>
 
-<!-- POPUP -->
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
 <h2 class="gold-text font-bold mb-4">
@@ -190,7 +195,6 @@ Your Request Is Officially Submitted
 <p>Our Team Member Will Call You Soon.</p>
 </div>
 
-<!-- ================= FIREBASE ================= -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -208,7 +212,42 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.goPage2 = function(){
+// Generate 6 friend inputs
+let friendsDiv=document.getElementById("friends");
+for(let i=1;i<=6;i++){
+let input=document.createElement("input");
+input.type="tel";
+input.placeholder="Friend "+i+" Phone Number";
+input.className="w-full p-3 mb-3 rounded-lg bg-black border border-gray-700";
+friendsDiv.appendChild(input);
+}
+
+window.goPage2=function(){
+
+let friendInputs=document.querySelectorAll("#friends input");
+let friends=[];
+let valid=true;
+
+friendInputs.forEach(input=>{
+if(input.value.trim()===""){valid=false;}
+friends.push(input.value);
+});
+
+if(!valid){
+alert("Please enter all 6 friends numbers.");
+return;
+}
+
+window.studentData={
+name:document.getElementById("name").value,
+phone:document.getElementById("phone").value,
+district:document.getElementById("district").value,
+medium:document.getElementById("medium").value,
+midterm:document.getElementById("midterm").value,
+target:document.getElementById("target").value,
+friends:friends
+};
+
 document.getElementById("page1").classList.add("hidden");
 document.getElementById("page2").classList.remove("hidden");
 
@@ -223,15 +262,10 @@ document.getElementById("page2").classList.add("hidden");
 document.getElementById("page3").classList.remove("hidden");
 }
 
-window.submitFinal = async function(){
+window.submitFinal=async function(){
 
 await addDoc(collection(db,"hisRoyalLeads"),{
-name:document.getElementById("name").value,
-phone:document.getElementById("phone").value,
-district:document.getElementById("district").value,
-medium:document.getElementById("medium").value,
-midterm:document.getElementById("midterm").value,
-target:document.getElementById("target").value,
+...window.studentData,
 decision:"YES - 100/100",
 timestamp:new Date()
 });
@@ -244,4 +278,4 @@ document.getElementById("popup").style.display="block";
 </script>
 
 </body>
-  </html>
+</html>
