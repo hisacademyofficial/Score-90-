@@ -1,342 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HIS Academy 100/100 Mission</title>
-
+<title>HIS Academy - Step 1</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<style>
-body{
-  background: linear-gradient(to bottom,#0B1120,#111827);
-}
-
-.glass{
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,215,0,0.3);
-}
-
-.subject{
-  opacity:0;
-  transform: translateY(40px) scale(0.9);
-  transition: all .6s ease;
-}
-.subject.show{
-  opacity:1;
-  transform: translateY(0) scale(1);
-}
-
-.gold-glow{
-  animation: gold 1.5s infinite;
-}
-@keyframes gold{
-  0%{box-shadow:0 0 10px #FFD700;}
-  50%{box-shadow:0 0 30px #FFD700;}
-  100%{box-shadow:0 0 10px #FFD700;}
-}
-
-.shine{
-  position: relative;
-  overflow:hidden;
-}
-.shine::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
-  background: linear-gradient(120deg,transparent,rgba(255,255,255,.3),transparent);
-  animation: shine 3s infinite;
-}
-@keyframes shine{
-  100%{left:100%;}
-}
-</style>
-  <!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyApw1BMALxqOlY4hBkGIMlv4qZBKkYM9k0",
-    authDomain: "gospark-media.firebaseapp.com",
-    projectId: "gospark-media",
-    storageBucket: "gospark-media.firebasestorage.app",
-    messagingSenderId: "888562657357",
-    appId: "1:888562657357:web:7e1e5df099c280c10fd404",
-    measurementId: "G-M571410VS2"
+const firebaseConfig = {
+  apiKey: "AIzaSyApw1BMALxqOlY4hBkGIMlv4qZBKkYM9k0",
+  authDomain: "gospark-media.firebaseapp.com",
+  projectId: "gospark-media",
+  storageBucket: "gospark-media.firebasestorage.app",
+  messagingSenderId: "888562657357",
+  appId: "1:888562657357:web:7e1e5df099c280c10fd404",
+  measurementId: "G-M571410VS2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.submitForm = async function(){
+
+  let friends = [];
+  document.querySelectorAll(".friendInput").forEach(i=>{
+    friends.push(i.value);
+  });
+
+  let data = {
+    name: name.value,
+    phone: phone.value,
+    district: district.value,
+    medium: medium.value,
+    studentsInClass: studentsCount.value,
+    midterm: midterm.value,
+    target: target.value,
+    friends: friends,
+    decision: "Pending",
+    reason: "",
+    timestamp: new Date()
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  const docRef = await addDoc(collection(db,"hisAcademyLeads"),data);
 
-  window.saveStudentData = async function(data) {
-    try {
-      await addDoc(collection(db, "hisAcademyLeads"), data);
-      console.log("Data saved successfully");
-    } catch (error) {
-      console.error("Error saving data:", error);
-    }
-  };
+  // Store document ID in localStorage
+  localStorage.setItem("leadId", docRef.id);
+
+  window.location.href="page2.html";
+}
 </script>
 </head>
 
-<body class="text-white font-sans">
+<body class="bg-gray-900 text-white flex justify-center items-center min-h-screen">
 
-<!-- ================= COUNTDOWN ================= -->
-<div class="text-center p-3 bg-black text-yellow-400 font-bold">
-⏳ SSLC Countdown: 17 Days Left
-</div>
+<div class="bg-gray-800 p-6 rounded-xl w-full max-w-md">
 
-<!-- ================= PAGE 1 ================= -->
-<div id="page1" class="min-h-screen flex flex-col justify-center items-center p-6">
+<input id="name" placeholder="Name" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<input id="phone" placeholder="Phone" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<input id="district" placeholder="District" class="w-full p-3 mb-3 bg-gray-700 rounded">
 
-<h1 class="text-3xl font-bold text-yellow-400 text-center mb-2">
-Only Serious 90+ Students Continue
-</h1>
-<p class="text-center text-yellow-300 mb-6">
-“Nimma Hesaru Result Board alli Barbeku.”
-</p>
-
-<div class="glass p-6 rounded-2xl w-full max-w-md">
-
-<input id="name" type="text" placeholder="Name"
-class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-
-<input id="phone" type="tel" placeholder="Phone Number"
-class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-
-<input id="district" type="text" placeholder="District"
-class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-
-<select id="medium"
-class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-  <option value="">Select Medium</option>
-  <option value="Kannada">Kannada</option>
-  <option value="English">English</option>
+<select id="medium" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<option>Kannada</option>
+<option>English</option>
 </select>
 
-<input id="studentsCount" type="number"
-placeholder="Students in your 10th class"
-class="w-full p-3 mb-3 rounded-lg bg-gray-800">
+<input id="studentsCount" placeholder="Students in class" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<input id="midterm" placeholder="Midterm %" class="w-full p-3 mb-3 bg-gray-700 rounded">
+<input id="target" placeholder="Target %" class="w-full p-3 mb-3 bg-gray-700 rounded">
 
-<input id="midterm" type="number"
-placeholder="Midterm %"
-class="w-full p-3 mb-3 rounded-lg bg-gray-800">
-
-<input id="target" type="number"
-placeholder="Target Final %"
-class="w-full p-3 mb-4 rounded-lg bg-gray-800">
-
-<p class="text-yellow-400 font-semibold mb-2">
-Add 6 Friends (Compulsory to Unlock)
-</p>
+<p class="text-yellow-400">Add 6 Friends</p>
 
 <div id="friends"></div>
 
-<button onclick="goPage2()"
-class="w-full mt-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold py-3 rounded-xl hover:scale-110 transition">
-Unlock Subjects
-</button>
-
-</div>
-</div>
-
-
-<select id="medium" ...>
-
-
-<!-- ================= PAGE 2 ================= -->
-<div id="page2" class="hidden min-h-screen p-6">
-
-<h2 class="text-2xl text-yellow-400 font-bold text-center mb-8">
-🔥 100/100 Blueprint Subjects 🔥
-</h2>
-
-<div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
-
-<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
-Kannada<br><span class="text-green-400 text-sm">FREE</span>
-</div>
-
-<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
-English<br><span class="text-green-400 text-sm">FREE</span>
-</div>
-
-<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
-Hindi<br><span class="text-green-400 text-sm">FREE</span>
-</div>
-
-<div class="subject glass p-4 rounded-xl text-center shine border border-green-400">
-Social<br><span class="text-green-400 text-sm">FREE</span>
-</div>
-
-<div class="subject glass p-4 rounded-xl text-center gold-glow border border-yellow-400">
-Maths<br><span class="text-yellow-300 text-sm">₹149 • Out of Out</span>
-</div>
-
-<div class="subject glass p-4 rounded-xl text-center gold-glow border border-yellow-400">
-Science<br><span class="text-yellow-300 text-sm">₹149 • Full Questions</span>
-</div>
-
-</div>
-
-<p class="text-center text-yellow-400 mt-6">
-4 Subjects FREE. Maths & Science ₹149 each for 100/100.
-</p>
-
-<button onclick="goPage3()"
-class="block mx-auto mt-8 bg-yellow-500 text-black px-6 py-3 rounded-xl font-bold hover:scale-110 transition">
+<button onclick="submitForm()"
+class="w-full bg-yellow-400 text-black p-3 mt-4 rounded font-bold">
 Continue
 </button>
 
 </div>
 
-<!-- ================= PAGE 3 ================= -->
-<div id="page3" class="hidden min-h-screen flex flex-col justify-center items-center p-6">
-
-<h3 class="text-xl text-yellow-400 font-bold mb-4 text-center">
-Watch Full Video Carefully 👇
-</h3>
-
-<video id="mainVideo" autoplay playsinline class="rounded-xl mb-6 max-w-md">
-<source src="your-video.mp4" type="video/mp4">
-</video>
-
-<div class="glass p-6 rounded-2xl max-w-md text-center">
-
-<p class="mb-4 font-semibold">
-Do you want to become the student everyone respects?
-</p>
-
-<button id="yesBtn"
-class="w-full bg-gray-600 text-black font-bold py-3 rounded-xl mb-3 cursor-not-allowed"
-disabled>
-🔥 YES – I Choose 100/100
-</button>
-
-<button onclick="showReason()"
-class="w-full bg-gray-700 py-3 rounded-xl">
-😔 No – I Am Okay With Average
-</button>
-
-<p id="regret" class="hidden mt-4 text-red-400">
-Next year you will regret not taking action today.
-</p>
-
-<textarea id="reasonBox"
-placeholder="Tell us why..."
-class="hidden w-full mt-4 p-3 rounded-lg bg-gray-800"></textarea>
-
-</div>
-
-</div>
-
 <script>
-
-// Generate 6 friend fields
-let f = document.getElementById("friends");
 for(let i=1;i<=6;i++){
  let input=document.createElement("input");
- input.type="tel";
- input.placeholder="Friend "+i+" Phone Number";
- input.className="w-full p-3 mb-2 rounded-lg bg-gray-800";
- f.appendChild(input);
+ input.placeholder="Friend "+i+" Phone";
+ input.className="friendInput w-full p-3 mb-2 bg-gray-700 rounded";
+ document.getElementById("friends").appendChild(input);
 }
-
-function goPage2(){
-
-  let friendsInputs = document.querySelectorAll("#friends input");
-  let friends = [];
-
-  friendsInputs.forEach(input => {
-    friends.push(input.value);
-  });
-
-  let studentData = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    district: document.getElementById("district").value,
-    medium: document.getElementById("medium").value,
-    studentsInClass: document.getElementById("studentsCount").value,
-    midtermPercentage: document.getElementById("midterm").value,
-    targetPercentage: document.getElementById("target").value,
-    friends: friends,
-    decision: "Not Answered Yet",
-    reason: "",
-    timestamp: new Date()
-  };
-
-  window.currentStudentData = studentData;
-
-  document.getElementById("page1").classList.add("hidden");
-  document.getElementById("page2").classList.remove("hidden");
-
-  let cards=document.querySelectorAll(".subject");
-  cards.forEach((card,index)=>{
-    setTimeout(()=>{card.classList.add("show");},index*300);
-  });
-      }
-
-function goPage3(){
- document.getElementById("page2").classList.add("hidden");
- document.getElementById("page3").classList.remove("hidden");
-}
-
-let video=document.getElementById("mainVideo");
-let yesBtn=document.getElementById("yesBtn");
-
-video.onended=function(){
- yesBtn.disabled=false;
- yesBtn.classList.remove("bg-gray-600","cursor-not-allowed");
- yesBtn.classList.add("bg-gradient-to-r","from-yellow-400","to-yellow-600");
- yesBtn.onclick=function(){
-   confetti({particleCount:150,spread:90,origin:{y:0.6}});
- };
-  yesBtn.disabled = false;
-
-yesBtn.classList.remove("bg-gray-600","cursor-not-allowed");
-
-yesBtn.classList.add(
-  "bg-gradient-to-r",
-  "from-yellow-400",
-  "to-yellow-600"
-);
-  yesBtn.onclick = async function(){
-
-  // Update decision
-  window.currentStudentData.decision = "YES - 100/100";
-
-  // Save to Firebase
-  await window.saveStudentData(window.currentStudentData);
-
-  // Celebration
-  confetti({
-    particleCount: 150,
-    spread: 90,
-    origin: { y: 0.6 }
-  });
-
-  alert("You are officially part of 100/100 Mission 🔥");
-};
-};
-
-async function showReason(){
-  document.getElementById("regret").classList.remove("hidden");
-  document.getElementById("reasonBox").classList.remove("hidden");
-
-  let reason = document.getElementById("reasonBox").value;
-
-  window.currentStudentData.decision = "NO";
-  window.currentStudentData.reason = reason;
-
-  await window.saveStudentData(window.currentStudentData);
-}
-
 </script>
 
 </body>
